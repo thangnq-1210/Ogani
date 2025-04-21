@@ -37,6 +37,10 @@ Import database from ```oganisql.sql```. Using default account:
 - [Maven](https://mvnrepository.com/)
 - [Angular](https://angular.io/)
 - [PrimeNG](https://primeng.org/)
+## Features
+- AI Chat Bot Integration
+- VNPay Payment Integration
+- Google Maps Integration
 ## Author
 [Nguyễn Quý Thắng](https://github.com/thangnq-1210)
 
