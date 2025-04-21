@@ -26,7 +26,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    
+
 
     @GetMapping("/")
     @Operation(summary="Lấy ra user bằng username")
@@ -43,9 +43,9 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-     @PutMapping("/password")
-     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
-         userService.changePassword(request);
-         return ResponseEntity.ok(new MessageResponse("Change Password Success!"));
-     }
+    @PutMapping("/password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
+        userService.changePassword(request);
+        return ResponseEntity.ok(new MessageResponse("Change Password Success!"));
+    }
 }

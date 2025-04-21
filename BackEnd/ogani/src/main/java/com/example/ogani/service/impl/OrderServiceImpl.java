@@ -21,7 +21,7 @@ import javax.transaction.Transactional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrder(order);
             totalPrice += orderDetail.getSubTotal();
             orderDetailRepository.save(orderDetail);
-            
+
         }
         order.setTotalPrice(totalPrice);
         order.setUser(user);
@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Not Found User With Username:" + username));
 
         List<Order> orders = orderRepository.getOrderByUser(user.getId());
-        return orders;  
+        return orders;
     }
 
     @Override

@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "orders")
 public class Order {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -43,7 +43,7 @@ public class Order {
     private long postCode;
 
     private String email;
-    
+
     private String phone;
 
     private String note;
@@ -58,5 +58,5 @@ public class Order {
 
     @OneToMany(mappedBy="order")
     @JsonBackReference
-    private Set<OrderDetail> orderdetails; 
+    private Set<OrderDetail> orderdetails;
 }

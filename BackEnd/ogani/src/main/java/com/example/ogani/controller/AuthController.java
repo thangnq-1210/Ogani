@@ -8,19 +8,18 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.example.ogani.model.request.ForgotPassWordRequest;
+import com.example.ogani.model.request.ResetPasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.ogani.model.request.CreateUserRequest;
 import com.example.ogani.model.request.LoginRequest;
@@ -50,7 +49,7 @@ public class AuthController {
     @Operation(summary="Đăng nhập")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
                         loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -86,5 +85,17 @@ public class AuthController {
       ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
       return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
           .body(new MessageResponse("You've been logout!"));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassWordRequest request) {
+        MessageResponse response = userService.forgotPassword(request.getEmail());
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        MessageResponse response = userService.resetPassword(request.getToken(), request.getNewPassword());
+        return ResponseEntity.ok().body(response);
     }
 }

@@ -3,8 +3,10 @@ package com.example.ogani.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.ogani.model.response.MessageResponse;
+import com.example.ogani.security.jwt.JwtUtils;
+import com.example.ogani.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,12 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -40,90 +48,100 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setPassword(encoder.encode(request.getPassword()));
         Set<String> strRoles = request.getRole();
-          Set<Role> roles = new HashSet<>();
-      
-          if (strRoles == null) {
+        Set<Role> roles = new HashSet<>();
+
+        if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
-          } else {
+        } else {
             strRoles.forEach(role -> {
-              switch (role) {
-              case "admin":
-                Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(adminRole);
-      
-                break;
-              case "mod":
-                Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(modRole);
-      
-                break;
-              default:
-                Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(userRole);
-              }
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "mod":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
             });
-          }
-          user.setRoles(roles);
-          userRepository.save(user);
+        }
+        user.setRoles(roles);
+        userRepository.save(user);
     }
 
     @Override
     public User getUserByUsername(String username) {
-      // TODO Auto-generated method stub
-      User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Not Found User"));
-      return user;
+        // TODO Auto-generated method stub
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("Not Found User"));
+        return user;
     }
 
     @Override
     public User updateUser(UpdateProfileRequest request) {
-      // TODO Auto-generated method stub
-      User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
-      user.setFirstname(request.getFirstname());
-      user.setLastname(request.getLastname());
-      user.setEmail(request.getEmail());
-      user.setCountry(request.getCountry());
-      user.setState(request.getState());
-      user.setAddress(request.getAddress());
-      user.setPhone(request.getPhone());
-      userRepository.save(user);
-      return user;
+        // TODO Auto-generated method stub
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
+        user.setFirstname(request.getFirstname());
+        user.setLastname(request.getLastname());
+        user.setEmail(request.getEmail());
+        user.setCountry(request.getCountry());
+        user.setState(request.getState());
+        user.setAddress(request.getAddress());
+        user.setPhone(request.getPhone());
+        userRepository.save(user);
+        return user;
     }
 
     @Override
-//    public void changePassword(ChangePasswordRequest request) {
-//      // TODO Auto-generated method stub
-//       User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
-//
-//       if(encoder.encode(request.getOldPassword()) != user.getPassword()){
-//         throw new BadRequestException("Old Passrword Not Same");
-//       }
-//       user.setPassword(encoder.encode(request.getNewPassword()));
-//
-//       userRepository.save(user);
-//
-//    }
     public void changePassword(ChangePasswordRequest request) {
-        User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new NotFoundException("User not found"));
+        // TODO Auto-generated method stub
+        // User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
 
-        if (!encoder.matches(request.getOldPassword(), user.getPassword())) {
-            throw new BadRequestException("Old password is incorrect");
-        }
-        if (!request.getNewPassword().equals(request.getNewPassword())) {
-            throw new BadRequestException("New password and confirm password do not match");
-        }
+        // if(encoder.encode(request.getOldPassword()) != user.getPassword()){
+        //   throw new BadRequestException("Old Passrword Not Same");
+        // }
+        // user.setPassword(encoder.encode(request.getNewPassword()));
 
-        user.setPassword(encoder.encode(request.getNewPassword()));
+        // userRepository.save(user);
 
-        userRepository.save(user);
     }
 
+    @Override
+    public MessageResponse forgotPassword(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user"));
+        String token = jwtUtils.generateResetToken(user.getEmail());
+        String resetLink = "http://localhost:4200/reset-password?token=" + token;
+        emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
+        return new MessageResponse("Email da duoc gui!");
+    }
 
+    @Override
+    public MessageResponse resetPassword(String token, String password) {
+        // Kiểm tra token hợp lệ
+        if (!jwtUtils.validateResetToken(token)) {
+            throw new BadRequestException("Token không hợp lệ hoặc đã hết hạn.");
+        }
+
+        // Lấy email từ token
+        String email = jwtUtils.getEmailFromToken(token);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Không tìm thấy người dùng"));
+
+        // Cập nhật mật khẩu mới
+        user.setPassword(encoder.encode(password));
+        userRepository.save(user);
+
+        return new MessageResponse("Mat khau thay doi thanh cong!");
+    }
 
 
 }

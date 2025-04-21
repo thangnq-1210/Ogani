@@ -71,13 +71,36 @@ public class JwtUtils {
   
       return false;
     }
-    
-    public String generateTokenFromUsername(String username) {   
-      return Jwts.builder()
-          .setSubject(username)
-          .setIssuedAt(new Date())
-          .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-          .signWith(SignatureAlgorithm.HS512, jwtSecret)
-          .compact();
+
+    public String generateTokenFromUsername(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public String generateResetToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 15 * 60 * 1000))
+                .claim("type", "reset-password")
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public boolean validateResetToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getEmailFromToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 }

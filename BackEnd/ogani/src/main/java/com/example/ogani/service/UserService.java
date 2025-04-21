@@ -4,6 +4,7 @@ import com.example.ogani.entity.User;
 import com.example.ogani.model.request.ChangePasswordRequest;
 import com.example.ogani.model.request.CreateUserRequest;
 import com.example.ogani.model.request.UpdateProfileRequest;
+import com.example.ogani.model.response.MessageResponse;
 
 public interface UserService {
     
@@ -16,4 +17,7 @@ public interface UserService {
 
     void changePassword(ChangePasswordRequest request);
 
+    MessageResponse forgotPassword(String email);
+
+    MessageResponse resetPassword(String token, String password);
 }
