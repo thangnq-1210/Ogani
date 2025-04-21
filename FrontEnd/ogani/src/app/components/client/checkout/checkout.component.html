@@ -1,8 +1,8 @@
 <p-toast></p-toast>
+<app-ask-ai></app-ask-ai>
 
 
-
-<section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/breadcrumb.jpg'}">
+<section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/banner.png'}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -23,54 +23,54 @@
     <div class="container">
         <div class="checkout__form">
             <h4>Billing Details</h4>
-            <form action="#">
+            <form action="#" (ngSubmit)="validateForm()">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Fist Name<span>*</span></p>
-                                    <input type="text" [(ngModel)]="orderForm.firstname" name="firstname">
+                                    <input type="text" [(ngModel)]="orderForm.firstname" name="firstname" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Last Name<span>*</span></p>
-                                    <input type="text" [(ngModel)]="orderForm.lastname" name="lastname">
+                                    <input type="text" [(ngModel)]="orderForm.lastname" name="lastname" required>
                                 </div>
                             </div>
                         </div>
                         <div class="checkout__input">
                             <p>Country<span>*</span></p>
-                            <input type="text" [(ngModel)]="orderForm.country" name="country">
+                            <input type="text" [(ngModel)]="orderForm.country" name="country" required>
                         </div>
                         <div class="checkout__input">
                             <p>Address<span>*</span></p>
-                            <input type="text" placeholder="Street Address" [(ngModel)]="orderForm.address" name="address">
+                            <input type="text" placeholder="Street Address" [(ngModel)]="orderForm.address" name="address" required>
                         </div>
                         <div class="checkout__input">
                             <p>Town/City<span>*</span></p>
-                            <input type="text" [(ngModel)]="orderForm.town" name="town">
+                            <input type="text" [(ngModel)]="orderForm.town" name="town" required>
                         </div>
                         <div class="checkout__input">
                             <p>Country/State<span>*</span></p>
-                            <input type="text" [(ngModel)]="orderForm.state" name="state">
+                            <input type="text" [(ngModel)]="orderForm.state" name="state" required>
                         </div>
                         <div class="checkout__input">
                             <p>Postcode / ZIP<span>*</span></p>
-                            <input type="text" [(ngModel)]="orderForm.postCode" name="postCode">
+                            <input type="text" [(ngModel)]="orderForm.postCode" name="postCode" required>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Phone<span>*</span></p>
-                                    <input type="text" [(ngModel)]="orderForm.phone" name="phone">
+                                    <input type="text" [(ngModel)]="orderForm.phone" name="phone" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="checkout__input">
                                     <p>Email<span>*</span></p>
-                                    <input type="text" [(ngModel)]="orderForm.email" name="email">
+                                    <input type="text" [(ngModel)]="orderForm.email" name="email" required>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="checkout__order">
+                        <!-- <div class="checkout__order">
                             <h4>Your Order</h4>
                             <div class="checkout__order__products">Products <span>Total</span></div>
                             <ul>
@@ -114,10 +114,43 @@
                                 </label>
                             </div>
                             <button type="submit" class="site-btn" (click)="placeOrder()">PLACE ORDER</button>
+                        </div> -->
+                        <div class="checkout__order">
+                            <h4>Your Order</h4>
+                            <div class="checkout__order__products">Products <span>Total</span></div>
+                            <ul>
+                                <li *ngFor="let item of cartService.items">
+                                    {{item.name}} <span>{{item.subTotal | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span>
+                                </li>
+                            </ul>
+                            <div class="checkout__order__subtotal">Subtotal <span>{{cartService.totalPrice | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span></div>
+                            <!-- <div class="checkout__order__sale">Sale <span>0%</span></div> -->
+                            <!-- <div class="checkout__order__total">Total <span>{{cartService.total | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span></div> -->
+                            <div class="checkout__order__sale">Sale <span>{{ cartService.discountPercent }}%</span></div>
+                            <div class="checkout__order__total">Total 
+                                <span>{{cartService.discountedTotal | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span>
+                              </div>
+
+                            <div class="checkout__input">
+                                <p>Payment method<span>*</span></p>
+                                <div class="custom-select-wrapper">
+                                  <select [(ngModel)]="orderForm.paymentMethod" name="paymentMethod" required class="custom-select">
+                                    <option value="" disabled selected>-- Select method --</option>
+                                    <option value="COD">💵 Cash on Delivery (COD)</option>
+                                    <option value="VNPay">💳 Payment via VNPay</option>
+                                  </select>
+                                </div>
+                              </div>
+                                                       
+                        
+                            <button type="button" class="site-btn mt-3" (click)="placeOrder()">PLACE ORDER</button>
                         </div>
+                        
+
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </section>
+

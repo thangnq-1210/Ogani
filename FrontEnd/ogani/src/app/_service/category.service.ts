@@ -38,5 +38,13 @@ export class CategoryService {
     return this.http.delete(CATEGORY_API + 'delete/'+ id,httpOptions);
   }
 
+   getCategories(): Observable<any[]> {
+    return this.http.get<any[]>(CATEGORY_API, httpOptions);
+  }
+
+  getEnabledCategories(): Observable<any[]> {
+    return this.http.get<any[]>(CATEGORY_API + 'enabled', httpOptions);
+  }
+
 
 }

@@ -1,7 +1,7 @@
 
 <p-toast></p-toast>
-
-<section>
+<app-ask-ai></app-ask-ai>
+<!-- <section>
     <div class="container">
         <div class="row justify-content-end">
             <div class="col-lg-9">
@@ -16,11 +16,59 @@
             </div>
         </div>
     </div>
-</section>
+</section>  -->
 <!-- Hero Section End -->
 
+<section class="slider">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="container">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-lg-6 slider-text">
+                            <h2 class="text-success">
+                                Order <span class="lighten">Online</span>, Save Your <br>
+                                <span class="lighten">Time</span>
+                            </h2>
+                            <p>Sản phẩm cuối kì môn Phần mềm mã nguồn mở.</p>
+                            <a href="" class="btn-order-now">Order Now</a>
+                        </div>
+                        <div class="col-lg-6 slider-image">
+                            <img src="assets/image/product/f1.png" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                        <div class="col-lg-6 slider-text">
+                            <h2 class="text-success">
+                                Order <span class="lighten">Online</span>, Save Your <br>
+                                <span class="lighten">Time</span>
+                            </h2>
+                            <p>Sản phẩm cuối kì môn Phần mềm mã nguồn mở.</p>
+                            <a href="" class="btn-order-now">Order Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                        <div class="col-lg-6 slider-image">
+                            <img src="assets/image/product/f3.png" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+
 <!-- Categories Section Begin -->
-<section class="categories">
+ <!-- <section class="categories">
     <div class="container">
         <div class="row">
             <p-carousel [value]="category_items" [numScroll]="1" [numVisible]="4" [circular]="true" [showIndicators]="false" [autoplayInterval]="4000">       
@@ -34,11 +82,75 @@
             </p-carousel>
         </div>
     </div>
-</section>
+</section> -->
+<!-- <section class="category-product">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Category Products</h2>
+        </div>
+        <p-carousel 
+            [value]="category_items" 
+            [numScroll]="1" 
+            [numVisible]="4" 
+            [circular]="true" 
+            [showIndicators]="false" 
+            [autoplayInterval]="4000">
+            
+            <ng-template let-item pTemplate="item">
+                <div class="category-item">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <img [src]="item.src" [alt]="item.title">
+                            <h4>{{ item.title }}</h4>
+                            <a href="" class="view-all-btn">View All <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+</section> -->
+<section class="category-product">
+    <div class="container">
+      <div class="section-title text-center">
+        <!-- <h2>Category Products</h2> -->
+        <h1 class="category-title">Our<span class="category-title2">Categories</span></h1>
+      </div>
+      <!-- <p-carousel [value]="category_items" [numScroll]="1" [numVisible]="4" [circular]="true" [showIndicators]="false" [autoplayInterval]="4000">
+        <ng-template let-item pTemplate="item">
+          <div class="category-item">
+            <div class="card border-0 shadow-sm">
+              <div class="card-body">
+                <img [src]="item.src" [alt]="item.title">
+                <h4>{{ item.title }}</h4>
+                <a href="" class="view-all-btn">View All <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel> -->
+      <p-carousel [value]="category_items" [numScroll]="1" [numVisible]="4" [circular]="true" [showIndicators]="false" [autoplayInterval]="4000">
+        <ng-template let-item pTemplate="item">
+            <div class="category-item">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <img [src]="item.src" [alt]="item.title">
+                        <h4>{{ item.title }}</h4>
+                        <a [routerLink]="'/category/' + item.id" class="view-all-btn">View All <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+    </div>
+  </section>
+  
+
+
 <!-- Categories Section End -->
 
 <!-- Lastest Section Begin -->
-<section class="featured spad">
+<!-- <section class="featured spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -60,6 +172,42 @@
                     <div class="featured__item__text">
                         <h6><a href="javascript:void(0)">{{product.name}}</a></h6>
                         <h5>{{product.price | currency}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+<section class="latest-product">
+    <div class="container">
+        <!-- <h2>Latest Products</h2>
+        <hr> -->
+        <div class="section-title text-center">
+            <!-- <h2>Latest Products</h2> -->
+            <h1 class="category-title">Latest<span class="category-title2">Products</span></h1>
+            <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur.</p> -->
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let product of listProductNewest">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <img [src]="'data:image/jpeg;base64,' + product.images[0].data" alt="{{ product.name }}" class="img-fluid">
+                        <h2 class="product_name">
+                            <a href="javascript:void(0)" routerLink="/product/{{product.id}}">{{ product.name }}</a>
+                        </h2>
+                        <div class="rating">
+                            <i class="bi bi-star-fill text-warning" *ngFor="let star of [1,2,3,4,5]"></i>
+                        </div>
+                        <!-- <h2 class="price">{{ product.price | currency }}</h2> -->
+                        <h2 class="price">{{ product.price | currency:'VND':'symbol':'1.0-0':'vi-VN' }}</h2>
+                        <div class="btn d-flex justify-content-between align-items-center">
+                            <a href="javascript:void(0)" class="add-to-cart-btn" (click)="addToCart(product)">
+                                <i class="bi bi-cart4"></i> Add to Cart
+                            </a>
+                            <a href="javascript:void(0)" class="add-to-favorite text-success" (click)="addToWishList(product)">
+                                <i class="bi bi-heart"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,7 +236,7 @@
 <!-- Banner End -->
 
 <!-- Featured Product Section Begin -->
-<section class="featured spad">
+<!-- <section class="featured spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -115,14 +263,57 @@
             </div>
         </div>
     </div>
+</section> -->
+<section class="latest-product">
+    <div class="container">
+        <!-- <h2>Featured Products</h2>
+        <hr> -->
+        <div class="section-title text-center">
+            <!-- <h2>Featured Products</h2> -->
+            <h1 class="category-title">Featured<span class="category-title2">Products</span></h1>
+            <!-- <p class="text-muted">Lorem ipsum dolor sit amet, consectetur.</p> -->
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let product of listProductPrice">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <img [src]="'data:image/jpeg;base64,' + product.images[0].data" alt="{{ product.name }}" class="img-fluid">
+                        <h2 class="product_name">
+                            <a href="javascript:void(0)" routerLink="/product/{{product.id}}">{{ product.name }}</a>
+                        </h2>
+                        <div class="rating">
+                            <i class="bi bi-star-fill text-warning" *ngFor="let star of [1,2,3,4,5]"></i>
+                        </div>
+                        <!-- <h2 class="price">{{ product.price | currency }}</h2> -->
+                        <h2 class="price">{{ product.price | currency:'VND':'symbol':'1.0-0':'vi-VN' }}</h2>
+                        <div class="btn d-flex justify-content-between align-items-center">
+                            <a href="javascript:void(0)" class="add-to-cart-btn" (click)="addToCart(product)">
+                                <i class="bi bi-cart4"></i> Add to Cart
+                            </a>
+                            <a href="javascript:void(0)" class="add-to-favorite text-success" (click)="addToWishList(product)">
+                                <i class="bi bi-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- Featured Product Section End -->
+<!--Promotion banner-->
+<section class="banner position-relative">
+    <div class="container">
+        <img class="w-100" src="assets/image/bn.jpg" alt="">
+        <h1 class="promo-title">NHOM21</h1>
 
+    </div>
+</section>
 <!-- Blog Section Begin -->
 <!-- <section class="from-blog spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12">  
                 <div class="section-title from-blog__title">
                     <h2>From The Blog</h2>
                 </div>

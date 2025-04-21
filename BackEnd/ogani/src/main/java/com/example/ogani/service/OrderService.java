@@ -7,9 +7,11 @@ import com.example.ogani.model.request.CreateOrderRequest;
 
 public interface OrderService {
     
-    void placeOrder(CreateOrderRequest request);
+    Order placeOrder(CreateOrderRequest request);
 
     List<Order> getList();
     
     List<Order> getOrderByUser(String username);
+
+    void updateOrderStatus(String orderId, String status);
 }

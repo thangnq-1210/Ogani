@@ -94,4 +94,11 @@ export class CartService {
     localStorage.removeItem('cart_items');
   }
 
+  discountPercent: number = 0;
+
+  get discountedTotal(): number {
+    const discount = (this.discountPercent / 100) * this.total;
+    return this.total - discount;
+  }
+
 }

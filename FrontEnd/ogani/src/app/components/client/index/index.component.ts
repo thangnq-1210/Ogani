@@ -155,7 +155,11 @@ export class IndexComponent implements OnInit {
     })
   }
 
+  showCategoryDropdown: boolean = false;
 
+  toggleCategoryDropdown() {
+    this.showCategoryDropdown = !this.showCategoryDropdown;
+  }
 
 
   showSuccess(text: string) {

@@ -48,6 +48,11 @@ import { MyOrderComponent } from './components/client/my-order/my-order.componen
 import { SearchComponent } from './components/client/search/search.component';
 import { LoginPageComponent } from './components/client/login-page/login-page.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeVi from '@angular/common/locales/vi';
+import { AskAiComponent } from './components/client/ask-ai/ask-ai.component';
+import { AboutComponent } from './components/client/about/about.component';
+registerLocaleData(localeVi);
 
 @NgModule({
   declarations: [
@@ -71,6 +76,8 @@ import { LoginPageComponent } from './components/client/login-page/login-page.co
     MyOrderComponent,
     SearchComponent,
     LoginPageComponent,
+    AskAiComponent,
+    AboutComponent,
 
   ],
   imports: [

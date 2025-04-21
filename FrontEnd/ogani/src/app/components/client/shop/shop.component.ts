@@ -44,6 +44,7 @@ export class ShopComponent implements OnInit {
     this.getListProductByCategory();
     this.getListCategoryEnabled();
     this.getNewestProduct();
+    window.scrollTo(0, 0);
   }
 
 

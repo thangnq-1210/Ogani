@@ -1,0 +1,36 @@
+
+<div id="chatbot-icon" (click)="toggleInput()"><i class="fa-solid fa-headset"></i></div>
+
+<div id="chatbot-container" [ngClass]="{ 'hidden': !showInput }">
+  <div id="chatbot-header">
+    <span>CHATBOT OGANI NHOM21 <i class="fa-solid fa-headset"></i></span>
+    <button id="close-btn" (click)="toggleInput()">&times;</button>
+  </div>
+
+  <div id="chatbot-body">
+    <div id="chatbot-messages">
+      <div *ngFor="let message of messages" [ngClass]="['message', message.from === 'user' ? 'user' : 'bot']">
+        {{ message.text }}
+      </div>
+
+      <div *ngIf="isLoading" class="loading-indicator">
+        <span>.</span><span>.</span><span>.</span>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div id="chatbot-input-container">
+    <input
+      type="text"
+      [(ngModel)]="question"
+      id="chatbot-input"
+      placeholder="Type a message..."
+      (keydown.enter)="askAI()" />
+
+    <button id="send-btn" (click)="askAI()">Send</button>
+  </div>
+
+  
+</div>

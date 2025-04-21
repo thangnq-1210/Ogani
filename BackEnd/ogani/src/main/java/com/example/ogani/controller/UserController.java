@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "*",maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -42,9 +43,9 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    // @PutMapping("/password")
-    // public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
-    //     userService.changePassword(request);
-    //     return ResponseEntity.ok(new MessageResponse("Change Password Success!"));
-    // }
+     @PutMapping("/password")
+     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request){
+         userService.changePassword(request);
+         return ResponseEntity.ok(new MessageResponse("Change Password Success!"));
+     }
 }

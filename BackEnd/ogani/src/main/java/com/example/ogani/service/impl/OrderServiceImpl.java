@@ -17,6 +17,8 @@ import com.example.ogani.repository.OrderRepository;
 import com.example.ogani.repository.UserRepository;
 import com.example.ogani.service.OrderService;
 
+import javax.transaction.Transactional;
+
 @Service
 public class OrderServiceImpl implements OrderService {
     
@@ -28,9 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Transactional
     @Override
-    public void placeOrder(CreateOrderRequest request) {
+    public Order placeOrder(CreateOrderRequest request) {
         // TODO Auto-generated method stub
         Order order = new Order();
         User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User With Username:" + request.getUsername()));
@@ -43,7 +45,14 @@ public class OrderServiceImpl implements OrderService {
         order.setPostCode(request.getPostCode());
         order.setEmail(request.getEmail());
         order.setPhone(request.getPhone());
-        order.setNote(request.getNote());   
+        order.setNote(request.getNote());
+//        order.setStatus("PENDING");
+        String paymentMethod = request.getPaymentMethod();
+        if ("COD".equalsIgnoreCase(paymentMethod)) {
+            order.setStatus("COD");
+        } else {
+            order.setStatus("PENDING");
+        }
         orderRepository.save(order);
         long totalPrice = 0;
         for(CreateOrderDetailRequest rq: request.getOrderDetails()){
@@ -60,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalPrice(totalPrice);
         order.setUser(user);
         orderRepository.save(order);
+        return order;
     }
 
     @Override
@@ -74,5 +84,14 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderRepository.getOrderByUser(user.getId());
         return orders;  
     }
+
+    @Override
+    public void updateOrderStatus(String orderId, String status) {
+        Order order = orderRepository.findById(Long.parseLong(orderId))
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng với ID: " + orderId));
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
+
 
 }

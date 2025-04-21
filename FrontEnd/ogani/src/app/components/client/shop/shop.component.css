@@ -6,7 +6,6 @@
     display: inline-block;
 }
 
-
 :host ::ng-deep .p-slider .p-slider-range, :host ::ng-deep  .p-slider .p-slider-handle {
     background-color: #dd2222;
     border-color: #dd2222;

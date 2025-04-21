@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { faBars, faHeart, faPhone, faRetweet, faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { MessageService } from 'primeng/api';
 import { CartService } from 'src/app/_service/cart.service';
 import { ProductService } from 'src/app/_service/product.service';
 import { WishlistService } from 'src/app/_service/wishlist.service';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,7 @@ import { WishlistService } from 'src/app/_service/wishlist.service';
   providers: [MessageService]
 
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   
 
   heart = faHeart;
@@ -45,45 +46,69 @@ export class HomeComponent implements OnInit {
   
 ]
 
+
 category_items = [
   {
-    id: 1,
-    src: 'assets/image/cat-1.jpg',
+    id: 13,
+    src: 'assets/image/product/C_carrot.png',
     alt: '',
-    title: 'Fresh Fruit'
+    title: 'Carrot'
   },
   {
-    id: 2,
-    src: 'assets/image/cat-2.jpg',
+    id: 12,
+    src: 'assets/image/product/C_onion.png',
     alt: '',
-    title: 'Dried Fruit'
+    title: 'Onion'
+  },
+  {
+    id: 14,
+    src: 'assets/image/product/C_broccoli.png',
+    alt: '',
+    title: 'Broccoli'
+  },
+  {
+    id: 18,
+    src: 'assets/image/product/C_grape.png',
+    alt: '',
+    title: 'Grape'
+  },
+  // {
+  //   id: 5,
+  //   src: 'assets/image/product/C_rice.png',
+  //   alt: '',
+  //   title: 'Rice'
+  // },
+  {
+    id: 17,
+    src: 'assets/image/product/C_apple.png',
+    alt: '',
+    title: 'Apple'
   },
   {
     id: 3,
-    src: 'assets/image/cat-3.jpg',
+    src: 'assets/image/product/C_fruit.png',
     alt: '',
-    title: 'Vegetables'
-  },
-  {
-    id: 4,
-    src: 'assets/image/cat-4.jpg',
-    alt: '',
-    title: 'Drink Fruits'
-  },
-  {
-    id: 5,
-    src: 'assets/image/cat-5.jpg',
-    alt: '',
-    title: 'Fresh Meat'
+    title: 'Fresh Fruit'
   }
+
 ] ;
 
 constructor(private productSerive:ProductService,private cartService: CartService, private wishlistService: WishlistService,private messageService: MessageService){}
 
 ngOnInit(): void {
   this.getListProduct();  
+  
 }
 
+ngAfterViewInit(): void {
+  const carouselElement = document.querySelector('#carouselExampleFade');
+  if (carouselElement) {
+    new bootstrap.Carousel(carouselElement, {
+      interval: 4000, 
+      ride: 'carousel'
+    });
+  }
+}
 
 getListProduct(){
   this.productSerive.getListProductNewest(8).subscribe({
@@ -101,6 +126,7 @@ getListProduct(){
     }
   })
 }
+
 
 addToCart(item: any){
   this.cartService.getItems();

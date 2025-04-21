@@ -1,7 +1,7 @@
 
 <p-toast></p-toast>
-
-<section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/breadcrumb.jpg'}">
+<app-ask-ai></app-ask-ai>
+<section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/banner.png'}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -31,9 +31,10 @@
                     </div>
                     <div class="sidebar__item">
                         <h4>Price</h4>
-                        <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="500" [style]="{'background':'#dd2222'}" (onChange)="getListProductByPriceRange()" ></p-slider>
+                        <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="1000000" [style]="{'background':'#dd2222'}" (onChange)="getListProductByPriceRange()" ></p-slider>
                         <div class="price-input mt-3">
-                            {{rangeValues[0] | currency}} - {{rangeValues[1] | currency}} 
+                            <!-- {{rangeValues[0] | currency}} - {{rangeValues[1] | currency}}  -->
+                            {{rangeValues[0] | currency:'VND':'symbol':'1.0-0':'vi'}} - {{rangeValues[1] | currency:'VND':'symbol':'1.0-0':'vi'}}
                         </div>
                     </div>
                     <div class="sidebar__item">
@@ -47,7 +48,8 @@
                                         </div>
                                         <div class="latest-product__item__text">
                                             <h6>{{product.name}}</h6>
-                                            <span>{{product.price | currency}}</span>
+                                            <!-- <span>{{product.price | currency}}</span> -->
+                                            <span>{{product.price | currency:'VND':'symbol':'1.0-0':'vi'}}</span>
                                         </div>
                                     </a>
                                 </div>
@@ -56,6 +58,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-lg-9 col-md-7">
                 <!-- <div class="product__discount">
                     <div class="section-title product__discount__title">
@@ -99,7 +102,8 @@
                                     </div>
                                     <div class="featured__item__text">
                                         <h6><a href="javascript:void(0)">{{product.name}}</a></h6>
-                                        <h5>{{product.price | currency}}</h5>
+                                        <!-- <h5>{{product.price | currency}}</h5> -->
+                                        <h5>{{product.price | currency:'VND':'symbol':'1.0-0':'vi'}}</h5>
                                     </div>
                                 </div>
                             </div>

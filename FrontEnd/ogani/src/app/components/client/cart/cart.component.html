@@ -1,8 +1,8 @@
 
 <p-toast></p-toast>
+<app-ask-ai></app-ask-ai>
 
-
-<section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/breadcrumb.jpg'}">
+<section class="breadcrumb-section set-bg" [ngStyle]="{backgroundImage:'url(assets/image/banner.png'}">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -40,7 +40,7 @@
                                     <h5>{{product.name}}</h5>
                                 </td>
                                 <td class="shoping__cart__price">
-                                    {{product.price | currency}}
+                                    {{product.price | currency:'VND':'symbol':'1.0-0':'vi-VN'}}
                                 </td>
                                 <td class="shoping__cart__quantity">
                                     <div class="quantity">
@@ -52,7 +52,7 @@
                                     </div>
                                 </td>
                                 <td class="shoping__cart__total">
-                                    {{product.subTotal | currency}}
+                                    {{product.subTotal | currency:'VND':'symbol':'1.0-0':'vi-VN'}}
                                 </td>
                                 <td class="shoping__cart__item__close">
                                     <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" (click)="removeFromCart(product)"></button>
@@ -74,8 +74,9 @@
                     <div class="shoping__discount">
                         <h5>Discount Codes</h5>
                         <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
-                            <button type="submit" class="site-btn">APPLY COUPON</button>
+                            <input type="text" placeholder="Enter your coupon code" [(ngModel)]="discountCode" name="discount">
+                            <button type="button" class="site-btn" (click)="applyDiscount()">APPLY COUPON</button>
+
                         </form>
                     </div>
                 </div>
@@ -84,9 +85,10 @@
                 <div class="shoping__checkout">
                     <h5>Cart Total</h5>
                     <ul>
-                        <li>Subtotal <span>{{cartService.totalPrice | currency}}</span></li>
-                        <li>Sale <span>- 0%</span></li>
-                        <li>Total <span>{{cartService.total | currency}}</span></li>
+                        <li>Subtotal <span>{{cartService.totalPrice | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span></li>
+                        <!-- <li>Sale <span>- 0%</span></li> -->
+                        <li>Sale <span>- {{discountPercent}}%</span></li>
+                        <li>Total <span>{{ discountedTotal | currency:'VND':'symbol':'1.0-0':'vi-VN' }}</span></li>
                     </ul>
                     <a href="javascript:void(0)" routerLink="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
                 </div>

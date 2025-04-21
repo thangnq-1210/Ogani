@@ -1,6 +1,7 @@
 package com.example.ogani.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +49,14 @@ public class OrderController {
     @Operation(summary="Đặt hàng sản phẩm")
     public ResponseEntity<?> placeOrder(@RequestBody CreateOrderRequest request){
 
-        orderService.placeOrder(request);
+//        orderService.placeOrder(request);
+//
+//        return ResponseEntity.ok(new MessageResponse("Order Placed Successfully!"));
 
-        return ResponseEntity.ok(new MessageResponse("Order Placed Successfully!"));
+        Order order = orderService.placeOrder(request); //
+        return ResponseEntity.ok().body(Map.of(
+                "message", "Order Placed Successfully!",
+                "orderId", order.getId()
+        ));
     }
 }

@@ -1,0 +1,34 @@
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  select.custom-select {
+    width: 100%;
+    padding: 6px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+  
+  .custom-select-wrapper select:focus {
+    border-color: #7fad39;
+    outline: none;
+    box-shadow: 0 0 6px rgba(127, 173, 57, 0.5);
+  }
+  
+  .custom-select-wrapper option {
+    padding: 10px;
+    color: #000;
+    background-color: #fff;
+  }
+  
