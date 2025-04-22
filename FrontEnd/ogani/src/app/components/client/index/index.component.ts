@@ -97,49 +97,7 @@ export class IndexComponent implements OnInit {
   }
 
   showAuthForm(){
-    if(!this.isLoggedIn){
-      this.authModal = true;
-      this.loginForm = {username: null,password: null};
-      this.registerForm = {username: null,email: null, password: null};
-    }
-  }
-
-  login():void{
-    const {username,password} = this.loginForm;
-    console.log(this.loginForm);
-    this.authService.login(username,password).subscribe({
-      next: res =>{
-        this.storageService.saveUser(res);
-        this.isLoggedIn = true;
-        this.isLoginFailed = false;
-        this.roles = this.storageService.getUser().roles;
-        this.showSuccess("Đăng nhập thành công!!");
-        this.authModal = false;
-        
-      },error: err =>{
-        console.log(err);
-        this.isLoggedIn = false;
-        this.isLoginFailed = true;
-        this.showError(err.message);
-      }
-    })
-  }
-
-  register():void{
-    const {username,email,password} = this.registerForm;
-    console.log(this.registerForm);
-    this.authService.register(username,email,password).subscribe({
-      next: res =>{
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-        this.showSuccess("Đăng ký thành công")
-        this.authModal = false;
-      },error: err =>{
-        this.showError(err.message);
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-      }
-    })
+    this.router.navigate(['/login']);
   }
 
   logout():void{
