@@ -32,15 +32,29 @@ export class LoginPageComponent implements OnInit {
     password: null
   }
 
+  forgotEmail: string = '';
+  isForgotPassword: boolean = false;
+  forgotMessage: string = '';
+  forgotError: string = '';
+  isLoading: boolean = false;
+  toggleForgotPassword() {
+    this.isForgotPassword = !this.isForgotPassword;
+    if (!this.isForgotPassword) {
+      this.forgotEmail = '';
+      this.forgotMessage = '';
+      this.forgotError = '';
+    }
+  }
+
   constructor(private authService:AuthService,private storageService: StorageService,private messageService:MessageService,private router:Router){}
 
   ngOnInit(): void {
   }
 
   login():void{
-    const {username,password} = this.loginForm;
+    const {email,password} = this.loginForm;
     console.log(this.loginForm);
-    this.authService.login(username,password).subscribe({
+    this.authService.login(email,password).subscribe({
       next: res =>{
         this.storageService.saveUser(res);
         this.isLoggedIn = true;
@@ -81,7 +95,21 @@ export class LoginPageComponent implements OnInit {
   registerFormChange(){
     document.getElementById('container')?.classList.add("right-panel-active");
   }
-  
+
+  onResetPassword() {
+    this.isLoading = true;
+    this.authService.forgotPassword(this.forgotEmail).subscribe({
+      next: () => {
+        this.forgotMessage = '✅Email khôi phục đã được gửi!';
+        this.forgotError = '';
+        this.isLoading = false;
+      },
+      error: () => {
+        this.forgotError = '❌Email chưa đăng ký hoặc sai định dạng!.';
+        this.isLoading = false;
+      }
+    });
+  }  
 
   showSuccess(text: string) {
     this.messageService.add({severity:'success', summary: 'Success', detail: text});

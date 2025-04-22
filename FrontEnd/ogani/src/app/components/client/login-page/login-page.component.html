@@ -9,14 +9,30 @@
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
-		<form action="#">
-			<h1>Sign in</h1>
-			<input type="text" placeholder="Username" [(ngModel)]="loginForm.username" name="username" />
-			<input type="password" placeholder="Password" [(ngModel)]="loginForm.password" name="password" />
-			<a href="javascript:void(0)">Forgot your password?</a>
-			<button (click)="login()">Sign In</button>
+		<!-- Form Đăng Nhập -->
+		<form *ngIf="!isForgotPassword" action="javascript:void(0)">
+		  <h1>Sign in</h1>
+		  <input type="text" placeholder="Email" [(ngModel)]="loginForm.email" name="email" />
+		  <input type="password" placeholder="Password" [(ngModel)]="loginForm.password" name="password" />
+		  <a href="javascript:void(0)" (click)="toggleForgotPassword()">Forgot your password?</a>
+		  <button (click)="login()">Sign In</button>
 		</form>
-	</div>
+	  
+		<!-- Form Quên Mật Khẩu -->
+		<form *ngIf="isForgotPassword" action="javascript:void(0)" class="forgot-password-form">
+		  <h2>Reset Password</h2>
+		  <input type="email" placeholder="Enter your email" [(ngModel)]="forgotEmail" name="forgotEmail" />
+		  <p *ngIf="forgotMessage" style="color: green;">{{ forgotMessage }}</p>
+  		  <p *ngIf="forgotError" style="color: red;">{{ forgotError }}</p>
+		  <button type="button" *ngIf="!forgotMessage" (click)="onResetPassword()">
+			<span *ngIf="!isLoading">Send Reset Email</span>
+			<span *ngIf="isLoading">
+				<i class="pi pi-spin pi-spinner" style="margin-right: 5px;"></i> Sending...
+			</span>
+		  </button>
+		  <a href="javascript:void(0)" (click)="toggleForgotPassword()">← Back to Login</a>
+		</form>
+	  </div>	  
 	<div class="overlay-container">
 		<div class="overlay">
 			<div class="overlay-panel overlay-left">
