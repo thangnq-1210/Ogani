@@ -77,13 +77,17 @@ export class LoginPageComponent implements OnInit {
       next: res =>{
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        this.showSuccess("Đăng ký thành công")
-        this.loginForm.username = username;
-        this.loginForm.password = password;
-        this.login();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Signup Success',
+          detail: 'Đăng ký thành công, Đương link xác thực đã được gửi đến gmail!'
+        });
       },error: err =>{
-        this.showError(err.message);
-        this.errorMessage = err.error.message;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Signup Failed',
+          detail: 'Đăng ký thất bại!',
+        });
         this.isSignUpFailed = true;
       }
     })

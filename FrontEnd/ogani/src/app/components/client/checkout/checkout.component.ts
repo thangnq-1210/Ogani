@@ -111,6 +111,7 @@ export class CheckoutComponent implements OnInit {
       orderDetail.price = res.price;
       orderDetail.quantity = res.quantity;
       orderDetail.subTotal = res.subTotal;
+      orderDetail.productId = res.id;
       this.listOrderDetail.push(orderDetail);
     });
   

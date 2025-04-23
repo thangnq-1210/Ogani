@@ -33,4 +33,8 @@ export class AuthService {
   resetPassword(token: string, newPassword: string): Observable<any> {
     return this.http.put(AUTH_API + 'reset-password', { token, newPassword }, httpOptions);
   }
+
+  verifyEmail(token: string): Observable<any> {
+    return this.http.get(AUTH_API + 'confirm', {params: { token }});    
+  }
 }
