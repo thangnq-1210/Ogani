@@ -18,9 +18,11 @@ import { ProductDetailComponent } from './components/client/product-detail/produ
 import { SearchComponent } from './components/client/search/search.component';
 import { ShopComponent } from './components/client/shop/shop.component';
 import { UserDetailComponent } from './components/client/user-detail/user-detail.component';
+import { AdminDetailComponent } from './components/admin/admin-detail/admin-detail.component';
+import { ResetPasswordComponent } from './components/client/reset-password/reset-password.component';
+import { VerifyEmailComponent } from './components/client/verify-email/verify-email.component';
 import { AuthGuardService } from './_service/auth-guard.service';
 import { RoleGuardService } from './_service/role-guard.service';
-import { AboutComponent } from './components/client/about/about.component';
 
 
 const routes: Routes = [
@@ -32,7 +34,7 @@ const routes: Routes = [
       {path:'order',component:OrderComponent},
       {path:'blog',component:BlogComponent},
       {path:'tag',component:TagComponent},
-      { path: 'about', component: AboutComponent}
+      {path: 'admin-detail',component: AdminDetailComponent}
     ]
   },
   {
@@ -47,11 +49,12 @@ const routes: Routes = [
       {path:'blog/:id',component:BlogDetailComponent},
       {path:'user',component:UserDetailComponent,canActivate: [AuthGuardService]},
       {path:'my-order',component:MyOrderComponent,canActivate: [AuthGuardService]},
-      {path:'search/:keyword',component:SearchComponent},
-      { path: 'about', component: AboutComponent }
+      {path:'search/:keyword',component:SearchComponent}
     ]
   },
-  {path:'login',component:LoginPageComponent}
+  {path:'login',component:LoginPageComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
+  {path: 'authenticate', component: VerifyEmailComponent}
 ];
 
 @NgModule({

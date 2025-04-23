@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit{
   gear = faGear;
   logoutIcon = faRightFromBracket;
   tag = faTag;
+  isSidebarVisible = true;
 
   constructor(private storageService:StorageService,private authService:AuthService,private router: Router){}
 
@@ -56,6 +57,8 @@ export class DashboardComponent implements OnInit{
     })
   }
   
-
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
   
 }

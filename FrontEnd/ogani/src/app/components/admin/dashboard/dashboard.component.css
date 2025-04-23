@@ -1,0 +1,42 @@
+#wrapper {
+    display: flex;
+    height: 100vh; /* Toàn màn hình */
+    overflow: hidden;
+  }
+.custom-sidebar .nav-link:hover {
+    background-color: #c3e7c9; /* màu nền khi hover */
+    color: #285d1b !important;    /* màu chữ khi hover */
+}
+.nav-item {
+    padding: 8px;
+}
+
+.ingredient {
+    padding-left: 5px;
+    font-weight: 400;
+}
+.nav-link.active {
+    background-color: #63ab74 !important;
+    color: white !important;
+}
+  
+.sidebar-transition {
+    transition: width 0.3s, margin 0.3s;
+    height: 100vh;
+    overflow: hidden;
+}
+  
+.sidebar-visible {
+    width: 250px;
+}
+  
+.sidebar-hidden {
+    width: 0;
+    padding: 0 !important;
+}
+
+.nav-item.dropdown .nav-link.dropdown-toggle {
+    color: #6c757d !important; /* text-secondary */
+    background-color: transparent !important;
+}
+  

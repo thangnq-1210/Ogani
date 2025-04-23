@@ -21,6 +21,7 @@ import com.example.ogani.model.request.UpdateProfileRequest;
 import com.example.ogani.repository.RoleRepository;
 import com.example.ogani.repository.UserRepository;
 import com.example.ogani.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -77,7 +78,11 @@ public class UserServiceImpl implements UserService {
             });
         }
         user.setRoles(roles);
+        user.setEnabled(false);
         userRepository.save(user);
+        String token = jwtUtils.generateConfirmToken(request.getEmail());
+        String resetLink = "http://localhost:4200/authenticate?token=" + token;
+        emailService.sendResetPasswordEmail("Xác thực email", user.getEmail(), resetLink);
     }
 
     @Override
@@ -121,11 +126,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Not found user"));
         String token = jwtUtils.generateResetToken(user.getEmail());
         String resetLink = "http://localhost:4200/reset-password?token=" + token;
-        emailService.sendResetPasswordEmail(user.getEmail(), resetLink);
+        emailService.sendResetPasswordEmail("Đặt lại mật khẩu", user.getEmail(), resetLink);
         return new MessageResponse("Email da duoc gui!");
     }
 
     @Override
+    @Transactional
     public MessageResponse resetPassword(String token, String password) {
         // Kiểm tra token hợp lệ
         if (!jwtUtils.validateResetToken(token)) {
@@ -143,5 +149,15 @@ public class UserServiceImpl implements UserService {
         return new MessageResponse("Mat khau thay doi thanh cong!");
     }
 
-
+    @Override
+    public MessageResponse confirmEmail(String token) {
+        if (!jwtUtils.validateConfirmToken(token)) {
+            throw new BadRequestException("Token không hợp lệ hoặc đã hết hạn.");
+        }
+        String email = jwtUtils.getEmailFromToken(token);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Không tìm thấy người dùng"));
+        user.setEnabled(true);
+        userRepository.save(user);
+        return new MessageResponse("Account verified. You can now login.");
+    }
 }

@@ -29,4 +29,6 @@ public class CreateOrderDetailRequest {
     private int quantity;
 
     private long subTotal;
+
+    private Long productId;
 }

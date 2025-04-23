@@ -20,4 +20,6 @@ public interface UserService {
     MessageResponse forgotPassword(String email);
 
     MessageResponse resetPassword(String token, String password);
+
+    MessageResponse confirmEmail(String token);
 }

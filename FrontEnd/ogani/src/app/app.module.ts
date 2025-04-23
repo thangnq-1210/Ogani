@@ -47,11 +47,14 @@ import { UserDetailComponent } from './components/client/user-detail/user-detail
 import { MyOrderComponent } from './components/client/my-order/my-order.component';
 import { SearchComponent } from './components/client/search/search.component';
 import { LoginPageComponent } from './components/client/login-page/login-page.component';
+import { ResetPasswordComponent } from './components/client/reset-password/reset-password.component';
+import { AdminDetailComponent } from './components/admin/admin-detail/admin-detail.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeVi from '@angular/common/locales/vi';
 import { AskAiComponent } from './components/client/ask-ai/ask-ai.component';
 import { AboutComponent } from './components/client/about/about.component';
+import { VerifyEmailComponent } from './components/client/verify-email/verify-email.component';
 registerLocaleData(localeVi);
 
 @NgModule({
@@ -78,6 +81,9 @@ registerLocaleData(localeVi);
     LoginPageComponent,
     AskAiComponent,
     AboutComponent,
+    ResetPasswordComponent,
+    AdminDetailComponent,
+    VerifyEmailComponent
 
   ],
   imports: [

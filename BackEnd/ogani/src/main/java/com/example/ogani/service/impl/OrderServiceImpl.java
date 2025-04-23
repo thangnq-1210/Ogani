@@ -2,6 +2,8 @@ package com.example.ogani.service.impl;
 
 import java.util.List;
 
+import com.example.ogani.entity.Product;
+import com.example.ogani.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
     @Transactional
     @Override
     public Order placeOrder(CreateOrderRequest request) {
@@ -62,9 +68,12 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setQuantity(rq.getQuantity());
             orderDetail.setSubTotal(rq.getPrice()* rq.getQuantity());
             orderDetail.setOrder(order);
+            Product product = productRepository.findById(rq.getProductId())
+                    .orElseThrow(() -> new NotFoundException("Sản phẩm không tồn tại"));
+
+            orderDetail.setProduct(product);
             totalPrice += orderDetail.getSubTotal();
             orderDetailRepository.save(orderDetail);
-
         }
         order.setTotalPrice(totalPrice);
         order.setUser(user);
@@ -89,8 +98,20 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrderStatus(String orderId, String status) {
         Order order = orderRepository.findById(Long.parseLong(orderId))
                 .orElseThrow(() -> new NotFoundException("Không tìm thấy đơn hàng với ID: " + orderId));
-        order.setStatus(status);
-        orderRepository.save(order);
+        if (!order.getStatus().equals("PAID")) {
+            order.setStatus(status);
+            orderRepository.save(order);
+
+            if ("PAID".equals(status)) {
+                // Trừ số lượng sản phẩm
+                for (OrderDetail detail : order.getOrderdetails()) {
+                    Product product = productRepository.findById(detail.getProduct().getId()).orElseThrow(()->
+                            new NotFoundException("Not found product!") );
+                    product.setQuantity(product.getQuantity() - detail.getQuantity());
+                    productRepository.save(product);
+                }
+            }
+        }
     }
 
 

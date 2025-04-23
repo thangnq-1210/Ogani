@@ -98,4 +98,9 @@ public class AuthController {
         MessageResponse response = userService.resetPassword(request.getToken(), request.getNewPassword());
         return ResponseEntity.ok().body(response);
     }
+    @GetMapping("/confirm")
+    public ResponseEntity<?> confirm(@RequestParam String token) {
+        MessageResponse response = userService.confirmEmail(token);
+        return ResponseEntity.ok().body(response);
+    }
 }

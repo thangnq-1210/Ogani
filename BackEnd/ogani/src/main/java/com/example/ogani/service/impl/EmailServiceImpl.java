@@ -15,11 +15,11 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
 
     @Override
-    public void sendResetPasswordEmail(String toEmail, String resetLink) {
+    public void sendResetPasswordEmail(String title, String toEmail, String resetLink) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setSubject("Đặt lại mật khẩu");
-        message.setText("Nhấn vào liên kết sau để đặt lại mật khẩu: \n" + resetLink);
+        message.setSubject(title);
+        message.setText("Nhấn vào liên kết sau để " + title.toLowerCase() + "\n" + resetLink);
         mailSender.send(message);
     }
 }
