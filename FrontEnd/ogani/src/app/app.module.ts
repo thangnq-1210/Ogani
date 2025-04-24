@@ -77,8 +77,7 @@ registerLocaleData(localeVi);
     SearchComponent,
     LoginPageComponent,
     AskAiComponent,
-    AboutComponent,
-
+    AboutComponent
   ],
   imports: [
     BrowserModule,

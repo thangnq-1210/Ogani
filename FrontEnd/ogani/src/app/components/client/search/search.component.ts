@@ -79,12 +79,25 @@ export class SearchComponent implements OnInit {
 
   addToCart(item: any){
     this.cartService.getItems();
+    this.showSuccess("Add To Cart Successfully!")
     this.cartService.addToCart(item,1);
   }
   
   addToWishList(item: any){
     if(!this.wishlistService.productInWishList(item)){
+      this.showSuccess("Add To Wishlist Successfully!")
       this.wishlistService.addToWishList(item);
     }
+  }
+  
+  showSuccess(text: string) {
+    this.messageService.add({severity:'success', summary: 'Success', detail: text});
+  }
+  showError(text: string) {
+    this.messageService.add({severity:'error', summary: 'Error', detail: text});
+  }
+  
+  showWarn(text: string) {
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
   }
 }
