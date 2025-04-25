@@ -64,6 +64,7 @@ export class LoginPageComponent implements OnInit {
         this.router.navigate(['/']);
       },error: err =>{
         console.log(err);
+        this.showError("Đăng nhập thất bại!!Vui lòng kiểm tra lại thông tin đăng nhập của bạn!!");
         this.isLoggedIn = false;
         this.isLoginFailed = true;
       }
