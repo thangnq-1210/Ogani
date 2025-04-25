@@ -33,8 +33,8 @@ public class VNPayServiceImpl implements VNPayService {
         params.put("vnp_IpAddr", "127.0.0.1");
         params.put("vnp_CreateDate", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
         params.put("vnp_OrderType", "other");
-        params.put("vnp_ExpireDate", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date(System.currentTimeMillis() + 15 * 60 * 1000)));
-
+        params.put("vnp_ExpireDate", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date(System.currentTimeMillis() + 20 * 60 * 1000)));
+        params.put("vnp_CurrCode", "VND");
         Map<String, String> sortedParams = new TreeMap<>(params);
 
         StringBuilder hashData = new StringBuilder();
@@ -55,9 +55,6 @@ public class VNPayServiceImpl implements VNPayService {
             String secureHash = hmacSHA512(config.getSecretKey(), hashData.toString());
 
             String paymentUrl = config.getPayUrl() + "?" + query + "&vnp_SecureHash=" + secureHash;
-
-//            System.out.println(" HashData: " + hashData);
-//            System.out.println(" Payment URL: " + paymentUrl);
 
             return paymentUrl;
 
@@ -100,11 +97,7 @@ public boolean verifyPaymentCallback(Map<String, String> params, String secureHa
             hashData.setLength(hashData.length() - 1);
         }
 
-//        System.out.println("Data to hash: " + hashData.toString());
-//        System.out.println("Received hash: " + receivedHash);
-
         String calculatedHash = hmacSHA512(secureHashSecret, hashData.toString());
-//        System.out.println("Calculated hash: " + calculatedHash);
 
         return calculatedHash.equalsIgnoreCase(receivedHash);
     } catch (Exception e) {

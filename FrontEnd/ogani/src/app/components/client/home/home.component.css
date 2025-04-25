@@ -32,36 +32,6 @@ section.slider .slider-image img {
   object-fit: contain;
 }
 
-/* section.category-product {
-  padding: 55px 0px;
-}
-section.category-product .card {
-  background: #f7f7f7;
-  overflow: hidden;
-}
-section.category-product .card .card-body {
-  text-align: center;
-}
-section.category-product .card .card-body img {
-  height: 150px;
-  object-fit: contain;
-  transition: 0.6s;
-}
-section.category-product .card .card-body h4 {
-  font-size: 25px;
-  text-shadow: 1px 1px 1px #4444;
-  margin: 50px 0px;
-}
-section.category-product .card .card-body a.view-all-btn {
-  background: var(--bs-success);
-  padding: 7px 30px;
-  border-radius: 50px;
-  color: #fff;
-}
-section.category-product .card:hover .card-body img {
-  transform: scale(1.2);
-} */
-
 section.banner {
   padding: 20px 0px;
 }

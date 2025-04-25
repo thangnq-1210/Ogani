@@ -72,12 +72,6 @@ category_items = [
     alt: '',
     title: 'Grape'
   },
-  // {
-  //   id: 5,
-  //   src: 'assets/image/product/C_rice.png',
-  //   alt: '',
-  //   title: 'Rice'
-  // },
   {
     id: 17,
     src: 'assets/image/product/C_apple.png',
