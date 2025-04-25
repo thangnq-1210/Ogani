@@ -34,7 +34,7 @@ p {
 
 .about{
     width: 100%;
-    height: 100vh;
+    height: 80vh;
     padding: 70px 0;
 }
 
@@ -102,7 +102,6 @@ p {
 .team{
     width: 100%;
     height: 90vh;
-    /* background-image: url(assets/image/bg1.jpg); */
     background-size: cover;
     background-position: center;
     margin-top: 10px
@@ -208,3 +207,71 @@ p {
 .team .team_box .profile .info .team_icon i:hover{
     color: #fac031;
 }
+
+.feedback-section {
+  padding: 50px 0;
+}
+
+.rating-container {
+  margin: 20px 0;
+}
+
+.rating-scale label {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.rating-scale input[type="radio"] {
+  margin-right: 5px;
+}
+
+.rating-comment textarea {
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #fac031;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.thanks{
+    width: 100%;
+    height: 20vh;
+    background-size: cover;
+    background-position: center;
+    margin-top: 10px
+}
+
+.thanks h1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    margin-bottom: 30px;
+}
+
+.thanks h1 span{
+    color: #fac031;
+    margin-left: 15px;
+    font-family: mv boli;
+}
+
+/* .thanks h1 span::after{
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #fac031;
+    display: block;
+    position: relative;
+    bottom: 15px;
+} */
