@@ -52,9 +52,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="javascript:void(0)" class="primary-btn" (click)="addCart(product)">ADD TO CARD</a>
+                    <a href="javascript:void(0)" class="primary-btn" *ngIf="!isOutOfStock" (click)="addCart(product)">ADD TO CARD</a>
+                    <span *ngIf="isOutOfStock" class="text-white primary-btn" style="background-color: red;">SOLD OUT</span>
                     <ul>
-                        <li><b>Availability</b> <span>In Stock</span></li>
+                        <li><b>Availability</b> <span *ngIf="!isOutOfStock">In Stock</span> <span *ngIf="isOutOfStock">Sold Out</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                         <li><b>Weight</b> <span>0.5 kg</span></li>
                     </ul>

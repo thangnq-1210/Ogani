@@ -24,6 +24,7 @@ export class ShopComponent implements OnInit {
   id: number = 0;
   listProduct : any;
   listCategory : any;
+  product : any;
   listProductNewest : any[] = [];
 
   rangeValues = [0,100];
@@ -33,6 +34,7 @@ export class ShopComponent implements OnInit {
     private productService: ProductService,
     private router: Router,
     private route: ActivatedRoute,
+    public messageService: MessageService,
     public cartService:CartService,
     public wishlistService:WishlistService){
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -90,8 +92,30 @@ export class ShopComponent implements OnInit {
   }
 
   addToCart(item: any){
-    this.cartService.getItems();
-    this.cartService.addToCart(item,1);
+    this.productService.getProduct(item.id).subscribe({
+      next: res => {
+        this.product = res;
+        const productInCart = this.cartService.items.find((p: any) => p.id === res.id);
+        const quantityInCart = productInCart ? productInCart.quantity : 0;
+  
+        if (res.quantity === 0) {
+          this.showWarn("Sản phẩm đã hết hàng!");
+          return;
+        }
+  
+        if (quantityInCart >= res.quantity) {
+          this.showWarn("Maximum products added in stock!");
+          return;
+        }
+  
+        this.cartService.getItems();
+        this.cartService.addToCart(res, 1);
+        this.showSuccess("Thêm vào giỏ hàng thành công!");
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   
   addToWishList(item: any){
@@ -99,5 +123,14 @@ export class ShopComponent implements OnInit {
       this.wishlistService.addToWishList(item);
     }
   }
-
+  showSuccess(text: string) {
+    this.messageService.add({severity:'success', summary: 'Success', detail: text});
+  }
+  showError(text: string) {
+    this.messageService.add({severity:'error', summary: 'Error', detail: text});
+  }
+  
+  showWarn(text: string) {
+    this.messageService.add({severity:'warn', summary: 'Warn', detail: text});
+  }
 }

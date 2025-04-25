@@ -1,6 +1,7 @@
 package com.example.ogani.service.impl;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import com.example.ogani.model.response.MessageResponse;
@@ -43,6 +44,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(CreateUserRequest request) {
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            if (user.isEnabled()) {
+                throw new IllegalArgumentException("Email already registered.");
+            } else {
+                String token = jwtUtils.generateConfirmToken(request.getEmail());
+                String resetLink = "http://localhost:4200/authenticate?token=" + token;
+                emailService.sendResetPasswordEmail("Xác thực lại email", user.getEmail(), resetLink);
+                return;
+            }
+        }
         // TODO Auto-generated method stub
         User user = new User();
         user.setUsername(request.getUsername());

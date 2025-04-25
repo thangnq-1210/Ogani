@@ -23,6 +23,8 @@ import { ResetPasswordComponent } from './components/client/reset-password/reset
 import { VerifyEmailComponent } from './components/client/verify-email/verify-email.component';
 import { AuthGuardService } from './_service/auth-guard.service';
 import { RoleGuardService } from './_service/role-guard.service';
+import { StatisticComponent } from './components/admin/statistic/statistic.component';
+import { AboutComponent } from './components/client/about/about.component';
 
 
 const routes: Routes = [
@@ -34,7 +36,8 @@ const routes: Routes = [
       {path:'order',component:OrderComponent},
       {path:'blog',component:BlogComponent},
       {path:'tag',component:TagComponent},
-      {path: 'admin-detail',component: AdminDetailComponent}
+      {path: 'admin-detail',component: AdminDetailComponent},
+      {path:'statistic',component:StatisticComponent}
     ]
   },
   {
@@ -49,7 +52,8 @@ const routes: Routes = [
       {path:'blog/:id',component:BlogDetailComponent},
       {path:'user',component:UserDetailComponent,canActivate: [AuthGuardService]},
       {path:'my-order',component:MyOrderComponent,canActivate: [AuthGuardService]},
-      {path:'search/:keyword',component:SearchComponent}
+      {path:'search/:keyword',component:SearchComponent},
+      {path:'about',component: AboutComponent}
     ]
   },
   {path:'login',component:LoginPageComponent},

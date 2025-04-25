@@ -21,6 +21,8 @@ export class ProductDetailComponent implements OnInit {
   star = faStar;
   star_half = faStarHalf;
   retweet = faRetweet;
+  isOutOfStock: boolean = false;
+
 
   showDepartment = false;
 
@@ -43,16 +45,22 @@ export class ProductDetailComponent implements OnInit {
   }
 
 
-  getProduct(){
-    this.productService.getProdct(this.id).subscribe({
-      next: res =>{
+  getProduct() {
+    this.productService.getProduct(this.id).subscribe({
+      next: res => {
         this.product = res;
+        this.isOutOfStock = this.product.quantity === 0;
+        if(this.product.quantity === 0) {
+          this.quantity = 0;
+        }
         this.getListRelatedProduct();
-      },error: err=>{
+      },
+      error: err => {
         console.log(err);
       }
-    })
+    });
   }
+  
 
   
 
@@ -73,11 +81,33 @@ export class ProductDetailComponent implements OnInit {
 
   }
 
-  addCart(item:any){
-    this.cartService.getItems();
-    this.cartService.addToCart(item,this.quantity);
-    this.showSuccess("Add To Cart Successfully!");
+  addCart(item: any) {
+    this.productService.getProduct(item.id).subscribe({
+      next: res => {
+        this.product = res;
+        const productInCart = this.cartService.items.find((p: any) => p.id === res.id);
+        const quantityInCart = productInCart ? productInCart.quantity : 0;
+  
+        if (res.quantity === 0) {
+          this.showWarn("Sản phẩm đã hết hàng!");
+          return;
+        }
+  
+        if (quantityInCart >= res.quantity) {
+          this.showWarn("Maximum products added in stock!");
+          return;
+        }
+  
+        this.cartService.getItems();
+        this.cartService.addToCart(res, this.quantity);
+        this.showSuccess("Thêm vào giỏ hàng thành công!");
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
+  
   
   addToWishList(item: any){
     if(!this.wishlistService.productInWishList(item)){
@@ -87,7 +117,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   plusQuantity(){
+    if(this.quantity < this.product.quantity){
     this.quantity += 1;
+    }
   }
   subtractQuantity(){
     if(this.quantity > 1){

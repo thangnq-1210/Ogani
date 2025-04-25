@@ -22,8 +22,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   listProductNewest : any;
   listProductPrice: any;
+  product : any;
 
   showDepartment = true;
+  isOutStock = false;
 
 
   category_items_response= [
@@ -93,7 +95,7 @@ category_items = [
 
 ] ;
 
-constructor(private productSerive:ProductService,private cartService: CartService, private wishlistService: WishlistService,private messageService: MessageService){}
+constructor(private productService:ProductService,private cartService: CartService, private wishlistService: WishlistService,private messageService: MessageService){}
 
 ngOnInit(): void {
   this.getListProduct();  
@@ -111,14 +113,14 @@ ngAfterViewInit(): void {
 }
 
 getListProduct(){
-  this.productSerive.getListProductNewest(8).subscribe({
+  this.productService.getListProductNewest(8).subscribe({
     next: res =>{
       this.listProductNewest = res;
     },error: err =>{
       console.log(err);
     }
   })
-  this.productSerive.getListProductByPrice().subscribe({
+  this.productService.getListProductByPrice().subscribe({
     next:res =>{
       this.listProductPrice =res;
     },error: err=>{
@@ -129,9 +131,30 @@ getListProduct(){
 
 
 addToCart(item: any){
-  this.cartService.getItems();
-  this.showSuccess("Add To Cart Successfully!")
-  this.cartService.addToCart(item,1);
+  this.productService.getProduct(item.id).subscribe({
+    next: res => {
+      this.product = res;
+      const productInCart = this.cartService.items.find((p: any) => p.id === res.id);
+      const quantityInCart = productInCart ? productInCart.quantity : 0;
+
+      if (res.quantity === 0) {
+        this.showWarn("Sold Out!");
+        return;
+      }
+
+      if (quantityInCart >= res.quantity) {
+        this.showWarn("Maximum products added in stock!");
+        return;
+      }
+
+      this.cartService.getItems();
+      this.cartService.addToCart(res, 1);
+      this.showSuccess("Thêm vào giỏ hàng thành công!");
+    },
+    error: err => {
+      console.log(err);
+    }
+  });
 }
 
 addToWishList(item: any){

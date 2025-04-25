@@ -3,6 +3,7 @@ package com.example.ogani.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.example.ogani.entity.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -59,4 +60,11 @@ public class OrderController {
                 "orderId", order.getId()
         ));
     }
+
+    @GetMapping("/get")
+    public ResponseEntity<List<OrderDetail>> getRevenue() {
+        List<OrderDetail> list = orderService.getRevenueByProduct();
+        return ResponseEntity.ok(list);
+    }
+
 }

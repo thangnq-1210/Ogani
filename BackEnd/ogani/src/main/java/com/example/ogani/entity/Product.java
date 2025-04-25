@@ -38,7 +38,4 @@ public class Product {
     @JoinTable(name = "product_image",joinColumns = @JoinColumn(name="product_id"),inverseJoinColumns = @JoinColumn(name="image_id"))
     private Set<Image> images = new HashSet<>();
 
-    @OneToMany(mappedBy = "product")
-    private List<OrderDetail> orderDetails;
-
 }

@@ -48,7 +48,7 @@ export class ProductService {
     return this.http.get(PRODUCT_API + 'range',{params: params})
   }
 
-  getProdct(id: number):Observable<any>{
+  getProduct(id: number):Observable<any>{
     return this.http.get(PRODUCT_API + id,httpOptions);
   }
 

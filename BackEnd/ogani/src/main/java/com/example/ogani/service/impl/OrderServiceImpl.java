@@ -74,6 +74,14 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setProduct(product);
             totalPrice += orderDetail.getSubTotal();
             orderDetailRepository.save(orderDetail);
+            if ("COD".equals(order.getStatus())) {
+                int remaining = product.getQuantity() - rq.getQuantity();
+                if (remaining < 0) {
+                    throw new IllegalStateException("Sản phẩm " + product.getName() + " không đủ số lượng trong kho.");
+                }
+                product.setQuantity(remaining);
+                productRepository.save(product);
+            }
         }
         order.setTotalPrice(totalPrice);
         order.setUser(user);
@@ -112,6 +120,11 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<OrderDetail> getRevenueByProduct() {
+        return orderDetailRepository.findAll(Sort.by("id").descending());
     }
 
 

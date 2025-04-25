@@ -16,6 +16,7 @@ import {faGear} from '@fortawesome/free-solid-svg-icons'
 import {faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 import { AuthService } from 'src/app/_service/auth.service';
 import { StorageService } from 'src/app/_service/storage.service';
+import {faCoins} from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -40,6 +41,7 @@ export class DashboardComponent implements OnInit{
   gear = faGear;
   logoutIcon = faRightFromBracket;
   tag = faTag;
+  coin = faCoins;
   isSidebarVisible = true;
 
   constructor(private storageService:StorageService,private authService:AuthService,private router: Router){}

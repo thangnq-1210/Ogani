@@ -71,6 +71,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   register():void{
+    this.isLoading = true;
     const {username,email,password} = this.registerForm;
     console.log(this.registerForm);
     this.authService.register(username,email,password).subscribe({
@@ -82,6 +83,7 @@ export class LoginPageComponent implements OnInit {
           summary: 'Signup Success',
           detail: 'Đăng ký thành công, Đương link xác thực đã được gửi đến gmail!'
         });
+        this.isLoading = false;
       },error: err =>{
         this.messageService.add({
           severity: 'error',
@@ -89,6 +91,7 @@ export class LoginPageComponent implements OnInit {
           detail: 'Đăng ký thất bại!',
         });
         this.isSignUpFailed = true;
+        this.isLoading = false;
       }
     })
   }

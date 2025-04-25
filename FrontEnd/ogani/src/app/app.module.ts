@@ -55,6 +55,7 @@ import localeVi from '@angular/common/locales/vi';
 import { AskAiComponent } from './components/client/ask-ai/ask-ai.component';
 import { AboutComponent } from './components/client/about/about.component';
 import { VerifyEmailComponent } from './components/client/verify-email/verify-email.component';
+import { StatisticComponent } from './components/admin/statistic/statistic.component';
 registerLocaleData(localeVi);
 
 @NgModule({
@@ -83,7 +84,8 @@ registerLocaleData(localeVi);
     AboutComponent,
     ResetPasswordComponent,
     AdminDetailComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    StatisticComponent
 
   ],
   imports: [
