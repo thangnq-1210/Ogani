@@ -50,6 +50,9 @@ public class UserServiceImpl implements UserService {
             if (user.isEnabled()) {
                 throw new IllegalArgumentException("Email already registered.");
             } else {
+                user.setUsername(request.getUsername());
+                user.setPassword(encoder.encode(request.getPassword()));
+                userRepository.save(user);
                 String token = jwtUtils.generateConfirmToken(request.getEmail());
                 String resetLink = "http://localhost:4200/authenticate?token=" + token;
                 emailService.sendResetPasswordEmail("Xác thực lại email", user.getEmail(), resetLink);
