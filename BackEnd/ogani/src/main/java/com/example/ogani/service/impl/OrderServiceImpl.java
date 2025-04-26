@@ -111,7 +111,6 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.save(order);
 
             if ("PAID".equals(status)) {
-                // Trừ số lượng sản phẩm
                 for (OrderDetail detail : order.getOrderdetails()) {
                     Product product = productRepository.findById(detail.getProduct().getId()).orElseThrow(()->
                             new NotFoundException("Not found product!") );
