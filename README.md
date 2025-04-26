@@ -27,7 +27,7 @@ mvn spring-boot:run
 Import database from ```oganisql.sql```. Using default account:
 
 - Admin account:
-    - Username: admin@gmail.com
+    - Username: oganiboss11@gmail.com
     - Password: 123456   
 ## Rest Api Document
 [Document Here](http://localhost:8080/swagger-ui/index.html#)
