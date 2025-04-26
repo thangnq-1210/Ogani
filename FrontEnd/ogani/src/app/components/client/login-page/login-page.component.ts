@@ -89,7 +89,7 @@ export class LoginPageComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Signup Failed',
-          detail: 'Đăng ký thất bại! Vui long kiểm tra lại thông tin đăng ký của bạn!',
+          detail: 'Đăng ký thất bại! Vui lòng kiểm tra lại thông tin đăng ký của bạn!',
         });
         this.isSignUpFailed = true;
         this.isLoading = false;
