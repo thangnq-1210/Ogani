@@ -41,6 +41,7 @@ Import database from ```oganisql.sql```. Using default account:
 - AI Chat Bot Integration
 - VNPay Payment Integration
 - Google Maps Integration
+- Java Mail Sender
 ## Author
 [Nguyễn Quý Thắng](https://github.com/thangnq-1210)
 
