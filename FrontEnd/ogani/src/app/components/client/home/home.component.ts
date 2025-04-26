@@ -131,19 +131,13 @@ addToCart(item: any){
       const productInCart = this.cartService.items.find((p: any) => p.id === res.id);
       const quantityInCart = productInCart ? productInCart.quantity : 0;
 
-      if (res.quantity === 0) {
-        this.showWarn("Sold Out!");
-        return;
-      }
-
       if (quantityInCart >= res.quantity) {
         this.showWarn("Maximum products added in stock!");
-        return;
+      } else {
+        this.cartService.getItems();
+        this.cartService.addToCart(res, 1);
+        this.showSuccess("Add To Cart Successfully!");
       }
-
-      this.cartService.getItems();
-      this.cartService.addToCart(res, 1);
-      this.showSuccess("Thêm vào giỏ hàng thành công!");
     },
     error: err => {
       console.log(err);

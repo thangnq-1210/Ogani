@@ -99,7 +99,7 @@ export class ShopComponent implements OnInit {
         const quantityInCart = productInCart ? productInCart.quantity : 0;
   
         if (res.quantity === 0) {
-          this.showWarn("Sản phẩm đã hết hàng!");
+          this.showWarn("Out of Stock!");
           return;
         }
   
@@ -110,7 +110,7 @@ export class ShopComponent implements OnInit {
   
         this.cartService.getItems();
         this.cartService.addToCart(res, 1);
-        this.showSuccess("Thêm vào giỏ hàng thành công!");
+        this.showSuccess("Add To Cart Successfully!");
       },
       error: err => {
         console.log(err);

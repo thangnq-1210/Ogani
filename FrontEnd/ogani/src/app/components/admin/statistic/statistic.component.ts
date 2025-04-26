@@ -27,13 +27,13 @@ export class StatisticComponent implements OnInit{
     this.getListProduct();
     this.getListCategoryEnabled();
     this.getListImage();
-    this.getListRevenue();
   }
 
   getListProduct(){
     this.productService.getListProduct().subscribe({
       next: res =>{
         this.listProduct =res;
+        this.getListRevenue();
       },error: err=>{
         console.log(err);
       }

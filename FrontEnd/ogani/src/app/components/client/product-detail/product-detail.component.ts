@@ -46,7 +46,8 @@ export class ProductDetailComponent implements OnInit {
 
 
   getProduct() {
-    this.productService.getProduct(this.id).subscribe({
+    this.productService.getProduct(this.
+      id).subscribe({
       next: res => {
         this.product = res;
         this.isOutOfStock = this.product.quantity === 0;
@@ -75,13 +76,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(item: any){
-    this.cartService.getItems();
-    this.cartService.addToCart(item,1);
-    this.showSuccess("Add To Cart Successfully!")
-
-  }
-
-  addCart(item: any) {
     this.productService.getProduct(item.id).subscribe({
       next: res => {
         this.product = res;
@@ -89,7 +83,7 @@ export class ProductDetailComponent implements OnInit {
         const quantityInCart = productInCart ? productInCart.quantity : 0;
   
         if (res.quantity === 0) {
-          this.showWarn("Sản phẩm đã hết hàng!");
+          this.showWarn("Out of Stock!");
           return;
         }
   
@@ -99,8 +93,29 @@ export class ProductDetailComponent implements OnInit {
         }
   
         this.cartService.getItems();
-        this.cartService.addToCart(res, this.quantity);
-        this.showSuccess("Thêm vào giỏ hàng thành công!");
+        this.cartService.addToCart(res, 1);
+        this.showSuccess("Add To Cart Successfully!");
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
+  addCart(item: any) {
+    this.productService.getProduct(item.id).subscribe({
+      next: res => {
+        this.product = res;
+        const productInCart = this.cartService.items.find((p: any) => p.id === res.id);
+        const quantityInCart = productInCart ? productInCart.quantity : 0;
+        console.log(productInCart, quantityInCart);
+        if (quantityInCart + this.quantity > res.quantity) {
+          this.showWarn("Maximum products added in stock!");
+          return;
+        } 
+        this.cartService.getItems();
+        this.cartService.addToCart(item, this.quantity);
+        this.showSuccess("Add To Cart Successfully!");
       },
       error: err => {
         console.log(err);
