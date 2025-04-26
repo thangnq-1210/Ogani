@@ -20,7 +20,7 @@ public class CreateUserRequest {
 
     @NotNull(message="Username rỗng")
     @NotEmpty(message="Username rỗng")
-    @Size(min=5,max=30,message="Username từ 5-30 ký tự")
+    @Size(min=4,max=30,message="Username từ 4-30 ký tự")
     @Schema(description="Username",example="admin",required=true)
     private String username;
 
