@@ -66,6 +66,7 @@ export class StatisticComponent implements OnInit{
           const revenueMap: { [key: number]: number } = {};
           res.forEach((od: any) => {
             const productId = od.product.id;
+            console.log(od.product.id);
             if (!revenueMap[productId]) {
               revenueMap[productId] = 0;
             }

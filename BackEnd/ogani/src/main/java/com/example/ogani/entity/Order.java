@@ -13,11 +13,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -58,6 +56,7 @@ public class Order {
     @JoinColumn(name="user_id")
     private User user;
 
-    @JsonManagedReference
+    @OneToMany(mappedBy="order")
+    @JsonBackReference
     private Set<OrderDetail> orderdetails;
 }
