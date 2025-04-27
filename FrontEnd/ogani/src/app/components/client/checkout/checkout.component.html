@@ -124,8 +124,6 @@
                                 </li>
                             </ul>
                             <div class="checkout__order__subtotal">Subtotal <span>{{cartService.totalPrice | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span></div>
-                            <!-- <div class="checkout__order__sale">Sale <span>0%</span></div> -->
-                            <!-- <div class="checkout__order__total">Total <span>{{cartService.total | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span></div> -->
                             <div class="checkout__order__sale">Sale <span>{{ cartService.discountPercent }}%</span></div>
                             <div class="checkout__order__total">Total 
                                 <span>{{cartService.discountedTotal | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</span>
