@@ -191,7 +191,7 @@
                             <a href="javascript:void(0)" class="add-to-cart-btn" *ngIf="product.quantity > 0" (click)="addToCart(product)">
                                 <i class="bi bi-cart4"></i> Add to Cart
                             </a>
-                            <a href="javascript:void(0)" class="add-to-cart-btn" *ngIf="product.quantity == 0">
+                            <a href="javascript:void(0)" class="add-to-cart-btn" *ngIf="product.quantity == 0" style="background-color: red; color: white;">
                                 <i class="bi bi-cart4"></i> Sold Out
                             </a>
                             <a href="javascript:void(0)" class="add-to-favorite text-success" (click)="addToWishList(product)">
@@ -280,7 +280,7 @@
                             <a href="javascript:void(0)" class="add-to-cart-btn" *ngIf="product.quantity > 0" (click)="addToCart(product)">
                                 <i class="bi bi-cart4"></i> Add to Cart
                             </a>
-                            <a href="javascript:void(0)" class="add-to-cart-btn" *ngIf="product.quantity == 0">
+                            <a href="javascript:void(0)" class="add-to-cart-btn" *ngIf="product.quantity == 0" style="background-color: red; color: white;">
                                 <i class="bi bi-cart4"></i> Sold Out
                             </a>
                             <a href="javascript:void(0)" class="add-to-favorite text-success" (click)="addToWishList(product)">
