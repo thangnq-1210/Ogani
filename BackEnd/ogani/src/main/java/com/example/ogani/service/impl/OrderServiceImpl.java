@@ -109,14 +109,14 @@ public class OrderServiceImpl implements OrderService {
         if (!order.getStatus().equals("PAID")) {
             order.setStatus(status);
             orderRepository.save(order);
-
-            if ("PAID".equals(status)) {
-                for (OrderDetail detail : order.getOrderdetails()) {
-                    Product product = productRepository.findById(detail.getProduct().getId()).orElseThrow(()->
-                            new NotFoundException("Not found product!") );
-                    product.setQuantity(product.getQuantity() - detail.getQuantity());
-                    productRepository.save(product);
-                }
+        }
+        if ("PAID".equals(status)) {
+            List<OrderDetail> details = orderDetailRepository.findByOrderId(order.getId());
+            for (OrderDetail detail : details) {
+                Product product = productRepository.findById(detail.getProduct().getId())
+                        .orElseThrow(() -> new NotFoundException("Not found product!"));
+                product.setQuantity(product.getQuantity() - detail.getQuantity());
+                productRepository.save(product);
             }
         }
     }

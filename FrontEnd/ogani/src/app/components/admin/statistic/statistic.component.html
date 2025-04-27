@@ -32,10 +32,10 @@
                 </td>
                 <td>{{product.name}}</td>
                 <td><img src="{{'data:image/jpg;base64,' +product.images[0].data}}" [alt]="product.name" width="100" class="shadow-4" /></td>
-                <td>{{product.price | currency:'VND'}}</td>
+                <td>{{product.price | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</td>
                 <td>{{product.category.name}}</td>
                 <td>{{product.quantity}}</td>
-                <td>{{product.revenue | currency:'VND'}}</td>
+                <td>{{product.revenue | currency:'VND':'symbol':'1.0-0':'vi-VN'}}</td>
             </tr>
         </ng-template>
         <ng-template pTemplate="summary">
