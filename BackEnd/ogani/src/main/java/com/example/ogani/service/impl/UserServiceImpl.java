@@ -125,16 +125,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(ChangePasswordRequest request) {
-        // TODO Auto-generated method stub
-        // User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new NotFoundException("Not Found User"));
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        if (!encoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new BadRequestException("Old password is incorrect");
+        }
+        if (!request.getNewPassword().equals(request.getNewPassword())) {
+            throw new BadRequestException("New password and confirm password do not match");
+        }
+        user.setPassword(encoder.encode(request.getNewPassword()));
 
-        // if(encoder.encode(request.getOldPassword()) != user.getPassword()){
-        //   throw new BadRequestException("Old Passrword Not Same");
-        // }
-        // user.setPassword(encoder.encode(request.getNewPassword()));
-
-        // userRepository.save(user);
-
+        userRepository.save(user);
     }
 
     @Override
